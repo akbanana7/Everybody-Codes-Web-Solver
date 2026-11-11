@@ -1,0 +1,85 @@
+
+name: Discord Commit Notifications
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Send Discord notification
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+          EVENT_PATH: ${{ github.event_path }}
+        run: |
+          node <<'NODE'
+          const fs = require('fs');
+
+          const event = JSON.parse(
+            fs.readFileSync(process.env.EVENT_PATH, 'utf8')
+          );
+
+          if (!event.commits?.length) process.exit(0);
+
+          const commits = event.commits.map(commit => ({
+            name: commit.author?.name || 'Unknown',
+            message: commit.message,
+            url: commit.url
+          }));
+
+          const description = commits.map(c =>
+            `**${c.name}**\n${c.message}\n[View commit](${c.url})`
+          ).join('\n\n');
+
+          const payload = {
+            username: 'GitHub',
+            content: '@everyone',
+            allowed_mentions: {
+              parse: ['everyone']
+            },
+            embeds: [{
+              title: `New push to ${event.repository.full_name}`,
+              url: event.compare,
+              description: description.slice(0, 4000),
+              color: 5793266,
+              fields: [
+                {
+                  name: 'Branch',
+                  value: event.ref.replace('refs/heads/', ''),
+                  inline: true
+                },
+                {
+                  name: 'Commits',
+                  value: String(commits.length),
+                  inline: true
+                },
+                {
+                  name: 'Changes',
+                  value: `[View complete diff](${event.compare})`
+                }
+              ],
+              timestamp: new Date().toISOString()
+            }]
+          };
+
+          fetch(process.env.DISCORD_WEBHOOK, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          }).then(async response => {
+            if (!response.ok) {
+              throw new Error(
+                `Discord returned ${response.status}`
+              );
+            }
+          }).catch(error => {
+            console.error(error);
+            process.exit(1);
+          });
+          NODE
