@@ -27,16 +27,22 @@ Viewable at: [Everybody Codes Solver](https://everybody-codes-web-solver.akbanan
 
 ## Solution page and integration
 
-`EC2601.html` is the EC2601 challenge page. `template.html` is currently an exact copy of that page.
-Both pages have three independent part sections, and load their implementations from
-`solvers/EC2601/part1.js`, `part2.js`, and `part3.js`. Update the challenge heading/description as
-needed; HTML comments identify the page customization and JavaScript hook locations.
+`EC2601.html` and `EC2602.html` are challenge-specific pages. `template.html` currently mirrors
+`EC2602.html`. Each page has three independent part sections and loads its implementation from the
+matching `solvers/<challenge>/part1.js`, `part2.js`, and `part3.js` files. Update the challenge
+heading/description as needed; HTML comments identify the page customization and JavaScript hook
+locations.
 
 The EC2601 solver accepts comma- or whitespace-separated non-negative integer pine-cone counts and
 returns the total additional cones for that formation. Each script exposes one function:
 `window.solveEC2601Part1(input)`, `window.solveEC2601Part2(input)`, or
-`window.solveEC2601Part3(input)`. The page loads and calls the matching function for each part;
-results are rendered as plain text in that part's output.
+`window.solveEC2601Part3(input)`.
+
+The EC2602 solver accepts one group of alloy comparisons per line (`a>b` means alloy `a` is harder
+than alloy `b`) and returns a checksum based on each group's uniquely determined hardest-to-softest
+order. Its scripts expose `window.solveEC2602Part1(input)`, `window.solveEC2602Part2(input)`, and
+`window.solveEC2602Part3(input)`. Both challenge pages load and call their own part functions;
+results are rendered as plain text in the corresponding output.
 
 See [CONTEXT.md](CONTEXT.md) for the project structure, design system, conventions, and contributor
 guidance.

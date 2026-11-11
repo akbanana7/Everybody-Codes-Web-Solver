@@ -8,9 +8,9 @@ change; do not use it as a task log.
 
 Everybody Codes Solver is a lightweight project started by ak for the TLV team. Its stated goal is
 to help the team solve Everybody Codes problems that are "out of date"—older than five days.
-The current site provides a manually maintained challenge index and a reusable three-part
-challenge input/output page. EC2601 has local JavaScript solvers for all three parts; no backend is
-used.
+The current site provides a manually maintained challenge index and challenge-specific three-part
+input/output pages. EC2601 and EC2602 have local JavaScript solvers for all three parts; no backend
+is used.
 
 The intended audience is the TLV team working on Everybody Codes challenges. Do not assume
 additional users, workflows, supported challenge parts, or product features without repository
@@ -18,17 +18,23 @@ evidence or direction from the project owner.
 
 ## Technology and architecture
 
-- **Languages:** HTML and CSS, with vanilla JavaScript solvers in `solvers/EC2601/`.
+- **Languages:** HTML and CSS, with vanilla JavaScript solvers in `solvers/EC2601/` and
+  `solvers/EC2602/`.
 - **Frameworks and dependencies:** None. There is no package manifest, framework, or dependency
   installation step.
-- **Architecture:** Static, multi-page frontend. `index.html`, `EC2601.html`, and `template.html`
-  share `style.css`. `EC2601.html` loads its three solver scripts directly. There is no server-side
-  code, API, persistent storage, build system, or configured test suite.
+- **Architecture:** Static, multi-page frontend. `index.html`, challenge pages, and
+  `template.html` share `style.css`. Each challenge page loads its three solver scripts directly.
+  There is no server-side code, API, persistent storage, build system, or configured test suite.
 - **Solver integration:** `solvers/EC2601/part1.js`, `part2.js`, and `part3.js` expose
   `window.solveEC2601Part1(input)`, `window.solveEC2601Part2(input)`, and
   `window.solveEC2601Part3(input)`, respectively. Each accepts non-negative integer notes separated
   by commas or whitespace and returns the total required pine cones as a decimal string. Each part
   has independent input, output, loading, and error state in the page.
+- **EC2602 solver integration:** `solvers/EC2602/part1.js`, `part2.js`, and `part3.js` expose
+  `window.solveEC2602Part1(input)`, `window.solveEC2602Part2(input)`, and
+  `window.solveEC2602Part3(input)`, respectively. Each accepts comparison groups with one group per
+  line (`a>b` means `a` is harder than `b`) and returns the checksum as a decimal string. Each group
+  must have a unique hardest-to-softest order, otherwise the solver reports an error.
 - **Data handling:** The current static pages do not submit input to a service or save it. A future
   solver integration must document its actual data flow and handle user input safely.
 
@@ -37,11 +43,15 @@ evidence or direction from the project owner.
 | File | Responsibility |
 | --- | --- |
 | `index.html` | Manually maintained challenge index; duplicate a `.challenge-card` article and edit its title and description |
-| `template.html` | Copy of the EC2601 solution page, with challenge title/description and three independent part forms |
+| `template.html` | Copy of the current challenge solution page, with title/description and three independent part forms |
 | `EC2601.html` | EC2601-specific page loading the three part solver scripts |
 | `solvers/EC2601/part1.js` | Computes added pine cones for filled-square formations |
 | `solvers/EC2601/part2.js` | Computes added pine cones for square-frame formations |
 | `solvers/EC2601/part3.js` | Computes added pine cones for odd filled squares with an empty center |
+| `EC2602.html` | EC2602-specific page loading the three alloy-ordering solver scripts |
+| `solvers/EC2602/part1.js` | Computes the checksum from complete pairwise alloy comparisons |
+| `solvers/EC2602/part2.js` | Reconstructs uniquely ordered alloys from all but one comparison |
+| `solvers/EC2602/part3.js` | Reconstructs uniquely ordered alloys from sparse comparisons |
 | `style.css` | Shared permanent dark theme, palette, typography, responsive layouts, and interaction states for both pages |
 | `README.md` | Project overview and local viewing/integration guidance |
 | `CONTEXT.md` | Shared project facts and contributor guidelines |
@@ -54,7 +64,8 @@ need.
 
 - `/` (or `index.html`) is the manually maintained challenge index.
 - `EC2601.html` is the specific page for challenge EC2601.
-- `template.html` currently mirrors `EC2601.html` and includes its challenge-specific solver links.
+- `EC2602.html` is the specific page for challenge EC2602.
+- `template.html` currently mirrors `EC2602.html` and includes its challenge-specific solver links.
 - Each `.challenge-card` entry in `index.html` contains a challenge number, title, description,
   and link to the solution workspace. To add an entry, duplicate the `<article class="challenge-card">`
   element and edit its number, title, description, and accessible link label. Entries are static
@@ -63,14 +74,14 @@ need.
   routes managed by a router.
 - No challenge-specific pages or challenge catalog currently exist.
 
-To customize the solution page, update the challenge heading and description in `EC2601.html`
-(and keep `template.html` in sync when it is intended to mirror this page).
+To customize a solution page, update the challenge heading and description in its challenge page
+(and keep `template.html` in sync when it is intended to mirror that page).
 The page provides three separate sections with `data-part-panel`, `data-part-form`,
 `data-part-input`, `data-part-button`, `data-part-output`, and `data-part-status` hooks. Each form
-selects the corresponding `window.solveEC2601PartN` function loaded by a `<script src>` element.
-Keep output as text (`textContent`), not injected HTML. HTML comments identify the main
-customization and JavaScript integration points. These scripts use `BigInt` so integer totals do
-not lose precision.
+selects the corresponding challenge-specific `window.solve<Challenge>PartN` function loaded by a
+`<script src>` element. Keep output as text (`textContent`), not injected HTML. HTML comments
+identify the main customization and JavaScript integration points. EC2601 uses `BigInt` so
+integer totals do not lose precision.
 
 ## Design system
 
