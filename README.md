@@ -27,15 +27,16 @@ Viewable at: [Everybody Codes Solver](https://everybody-codes-web-solver.akbanan
 
 ## Solution page and integration
 
-`template.html` is a reusable challenge/part page. Update its heading, description, and part label
-for a challenge. The page includes a multiline input, Solve button, output display, and loading/error
-feedback.
+`EC2601.html` is the EC2601 challenge page. `template.html` is currently an exact copy of that page.
+Both pages have three independent part sections, and load their implementations from
+`solvers/EC2601/part1.js`, `part2.js`, and `part3.js`. Update the challenge heading/description as
+needed; HTML comments identify the page customization and JavaScript hook locations.
 
-There is no challenge-solving implementation or API in this project yet. Without an integration,
-the Solve action reports that it is not configured and does not fabricate a result. To connect a
-solver, define `window.solveChallenge` before the page's inline script runs. It receives the input
-text and an object containing the displayed `title` and `part`, and must return a string or number
-(synchronously or as a promise). Returned values are rendered as plain text.
+The EC2601 solver accepts comma- or whitespace-separated non-negative integer pine-cone counts and
+returns the total additional cones for that formation. Each script exposes one function:
+`window.solveEC2601Part1(input)`, `window.solveEC2601Part2(input)`, or
+`window.solveEC2601Part3(input)`. The page loads and calls the matching function for each part;
+results are rendered as plain text in that part's output.
 
 See [CONTEXT.md](CONTEXT.md) for the project structure, design system, conventions, and contributor
 guidance.

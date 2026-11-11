@@ -518,6 +518,49 @@ p {
   font-weight: 700;
 }
 
+.part-list {
+  display: grid;
+  gap: 34px;
+}
+
+.part-panel + .part-panel {
+  padding-top: 30px;
+  border-top: 1px solid var(--line);
+}
+
+.part-heading {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 14px;
+}
+
+.part-number {
+  width: 40px;
+  height: 40px;
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  color: var(--teal);
+  background: rgba(154, 209, 212, 0.09);
+  border: 1px solid rgba(154, 209, 212, 0.18);
+  border-radius: 6px;
+  font-family: "Cascadia Code", Consolas, monospace;
+  font-size: 12px;
+}
+
+.part-heading .eyebrow {
+  margin-bottom: 1px;
+  font-size: 9px;
+}
+
+.part-heading h2 {
+  margin: 0;
+  font-size: 21px;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+}
+
 .solver-form,
 .result-section {
   padding: clamp(19px, 4vw, 29px);
@@ -618,7 +661,7 @@ p {
 }
 
 .result-section {
-  margin-top: 20px;
+  margin-top: 14px;
 }
 
 .result-heading {
@@ -633,7 +676,8 @@ p {
   margin-bottom: 2px;
 }
 
-.result-heading h2 {
+.result-heading h2,
+.result-heading h3 {
   margin-bottom: 0;
   font-size: 20px;
   font-weight: 700;
@@ -858,6 +902,10 @@ p {
 
   .solution-title-row h1 {
     font-size: 37px;
+  }
+
+  .part-panel + .part-panel {
+    padding-top: 23px;
   }
 
   .solver-form,

@@ -8,8 +8,9 @@ change; do not use it as a task log.
 
 Everybody Codes Solver is a lightweight project started by ak for the TLV team. Its stated goal is
 to help the team solve Everybody Codes problems that are "out of date"—older than five days.
-The current site provides a manually maintained challenge index and a reusable challenge
-input/output page. It does not currently implement a challenge solver or connect to a backend.
+The current site provides a manually maintained challenge index and a reusable three-part
+challenge input/output page. EC2601 has local JavaScript solvers for all three parts; no backend is
+used.
 
 The intended audience is the TLV team working on Everybody Codes challenges. Do not assume
 additional users, workflows, supported challenge parts, or product features without repository
@@ -17,18 +18,17 @@ evidence or direction from the project owner.
 
 ## Technology and architecture
 
-- **Languages:** HTML and CSS, with a small inline vanilla JavaScript integration point in
-  `template.html`.
+- **Languages:** HTML and CSS, with vanilla JavaScript solvers in `solvers/EC2601/`.
 - **Frameworks and dependencies:** None. There is no package manifest, framework, or dependency
   installation step.
-- **Architecture:** Static, multi-page frontend. `index.html` and `template.html` are standalone
-  documents that share `style.css`. There is no server-side code, API, persistent storage, build
-  system, or test suite in the repository.
-- **External integrations:** None are currently configured. The solution template optionally calls
-  `window.solveChallenge(input, { title, part })` when that function is supplied. The hook must
-  return a string or number; the template displays the returned value as text and reports missing
-  hooks, invalid return values, and thrown/rejected errors. Do not invent an endpoint or claim that
-  solving works until real solution logic is connected.
+- **Architecture:** Static, multi-page frontend. `index.html`, `EC2601.html`, and `template.html`
+  share `style.css`. `EC2601.html` loads its three solver scripts directly. There is no server-side
+  code, API, persistent storage, build system, or configured test suite.
+- **Solver integration:** `solvers/EC2601/part1.js`, `part2.js`, and `part3.js` expose
+  `window.solveEC2601Part1(input)`, `window.solveEC2601Part2(input)`, and
+  `window.solveEC2601Part3(input)`, respectively. Each accepts non-negative integer notes separated
+  by commas or whitespace and returns the total required pine cones as a decimal string. Each part
+  has independent input, output, loading, and error state in the page.
 - **Data handling:** The current static pages do not submit input to a service or save it. A future
   solver integration must document its actual data flow and handle user input safely.
 
@@ -37,7 +37,11 @@ evidence or direction from the project owner.
 | File | Responsibility |
 | --- | --- |
 | `index.html` | Manually maintained challenge index; duplicate a `.challenge-card` article and edit its title and description |
-| `template.html` | Reusable challenge/part title and description, multiline input, Solve action, output, and solver hook |
+| `template.html` | Copy of the EC2601 solution page, with challenge title/description and three independent part forms |
+| `EC2601.html` | EC2601-specific page loading the three part solver scripts |
+| `solvers/EC2601/part1.js` | Computes added pine cones for filled-square formations |
+| `solvers/EC2601/part2.js` | Computes added pine cones for square-frame formations |
+| `solvers/EC2601/part3.js` | Computes added pine cones for odd filled squares with an empty center |
 | `style.css` | Shared permanent dark theme, palette, typography, responsive layouts, and interaction states for both pages |
 | `README.md` | Project overview and local viewing/integration guidance |
 | `CONTEXT.md` | Shared project facts and contributor guidelines |
@@ -49,7 +53,8 @@ need.
 ## Pages and navigation
 
 - `/` (or `index.html`) is the manually maintained challenge index.
-- `template.html` is the reusable solution workspace.
+- `EC2601.html` is the specific page for challenge EC2601.
+- `template.html` currently mirrors `EC2601.html` and includes its challenge-specific solver links.
 - Each `.challenge-card` entry in `index.html` contains a challenge number, title, description,
   and link to the solution workspace. To add an entry, duplicate the `<article class="challenge-card">`
   element and edit its number, title, description, and accessible link label. Entries are static
@@ -58,9 +63,14 @@ need.
   routes managed by a router.
 - No challenge-specific pages or challenge catalog currently exist.
 
-To customize the solution page, update the challenge heading, description, and part label in
-`template.html`. The Solve form passes the textarea value and those displayed title/part values to
-the optional global hook. Keep output as text (`textContent`), not injected HTML.
+To customize the solution page, update the challenge heading and description in `EC2601.html`
+(and keep `template.html` in sync when it is intended to mirror this page).
+The page provides three separate sections with `data-part-panel`, `data-part-form`,
+`data-part-input`, `data-part-button`, `data-part-output`, and `data-part-status` hooks. Each form
+selects the corresponding `window.solveEC2601PartN` function loaded by a `<script src>` element.
+Keep output as text (`textContent`), not injected HTML. HTML comments identify the main
+customization and JavaScript integration points. These scripts use `BigInt` so integer totals do
+not lose precision.
 
 ## Design system
 

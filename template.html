@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#071820">
-    <meta name="description" content="A reusable Everybody Codes challenge solution workspace.">
+    <meta name="description" content="A reusable three-part Everybody Codes challenge solution workspace.">
     <title>Solution workspace | Everybody Codes Solver</title>
     <link rel="stylesheet" href="style.css">
   </head>
@@ -23,59 +23,181 @@
     </header>
 
     <main class="solution-main page-shell">
-      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to overview</a>
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to challenge index</a>
 
       <section class="solution-intro" aria-labelledby="challenge-title">
-        <p class="eyebrow eyebrow-dark">CHALLENGE WORKSPACE</p>
+        <p class="eyebrow">CHALLENGE WORKSPACE</p>
         <div class="solution-title-row">
           <div>
-            <h1 id="challenge-title">Challenge title</h1>
+            <!-- JS hook: set this challenge title; it is passed to window.solveChallenge for each part. -->
+            <h1 id="challenge-title">The Conservation (2026 - 01)</h1>
+            <!-- JS hook: add or update the challenge instructions here. -->
             <p class="solution-description" id="challenge-description">
-              Replace this description with the challenge instructions or a short note for your team.
+              Calculation of needed pine cones.
             </p>
           </div>
-          <span class="part-badge" id="challenge-part">Part 1</span>
+          <span class="part-badge">3 parts</span>
         </div>
       </section>
 
-      <form class="solver-form" id="solver-form">
-        <label class="field-label" for="challenge-input">
-          Challenge input
-          <span class="field-hint">Paste the puzzle prompt, input data, or both.</span>
-        </label>
-        <textarea
-          class="challenge-input"
-          id="challenge-input"
-          name="challenge-input"
-          placeholder="Paste your challenge input here..."
-          spellcheck="false"
-          required
-        ></textarea>
-        <div class="solve-row">
-          <p class="solve-note">This page does not send input anywhere by itself.</p>
-          <button class="button button-primary solve-button" id="solve-button" type="submit">
-            <span class="button-label">Solve</span>
-            <span class="button-arrow" aria-hidden="true">→</span>
-          </button>
-        </div>
-      </form>
-
-      <section class="result-section" aria-labelledby="result-title">
-        <div class="result-heading">
-          <div>
-            <p class="eyebrow eyebrow-dark">SOLUTION</p>
-            <h2 id="result-title">Output</h2>
+      <div class="part-list">
+        <!-- PART TEMPLATE: each part uses data-part-form, data-part-input, data-part-button,
+             data-part-output, and data-part-status as JavaScript hooks. Keep data-part unique. -->
+        <section class="part-panel" data-part-panel="1" aria-labelledby="part-1-title">
+          <div class="part-heading">
+            <span class="part-number">01</span>
+            <div>
+              <p class="eyebrow">CHALLENGE PART</p>
+              <h2 id="part-1-title">Part 1</h2>
+            </div>
           </div>
-          <span class="result-format">Plain text</span>
-        </div>
-        <div class="output-box" id="output-box">
-          <p class="output-placeholder" id="output-placeholder">Your result will appear here after the solver runs.</p>
-          <pre class="output-content" id="output-content" hidden></pre>
-        </div>
-        <p class="solver-status" id="solver-status" role="status" aria-live="polite" aria-atomic="true">
-          Solver integration is not configured. Connect a <code>window.solveChallenge</code> function to enable results.
-        </p>
-      </section>
+
+          <!-- JS hook: this form's submit handler reads its input and updates only its output/status. -->
+          <form class="solver-form" data-part-form data-part="1">
+            <label class="field-label" for="part-1-input">
+              Challenge input
+              <span class="field-hint">Paste input data</span>
+            </label>
+            <!-- JS hook: read this textarea as the input for Part 1. -->
+            <textarea
+              class="challenge-input"
+              id="part-1-input"
+              data-part-input
+              name="part-1-input"
+              placeholder="Paste your Part 1 input here..."
+              spellcheck="false"
+              required
+            ></textarea>
+            <div class="solve-row">
+              <p class="solve-note">This page does not send input anywhere by itself.</p>
+              <!-- JS hook: submit this part's solver. The button is disabled while it runs. -->
+              <button class="button solve-button" data-part-button type="submit">
+                <span data-button-label>Solve Part 1</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </form>
+
+          <section class="result-section" aria-labelledby="part-1-output-title">
+            <div class="result-heading">
+              <div>
+                <p class="eyebrow">SOLUTION</p>
+                <h3 id="part-1-output-title">Part 1 output</h3>
+              </div>
+              <span class="result-format">Plain text</span>
+            </div>
+            <!-- JS hook: render the Part 1 result into data-part-output using textContent. -->
+            <div class="output-box" data-part-output>
+              <p class="output-placeholder" data-part-placeholder>Your result will appear here after the solver runs.</p>
+              <pre class="output-content" data-part-result hidden></pre>
+            </div>
+            <!-- JS hook: announce Part 1 loading, success, or error status here. -->
+            <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
+              Ready for pine-cone counts. Enter comma-separated values and solve this part.
+            </p>
+          </section>
+        </section>
+
+        <section class="part-panel" data-part-panel="2" aria-labelledby="part-2-title">
+          <div class="part-heading">
+            <span class="part-number">02</span>
+            <div>
+              <p class="eyebrow">CHALLENGE PART</p>
+              <h2 id="part-2-title">Part 2</h2>
+            </div>
+          </div>
+
+          <form class="solver-form" data-part-form data-part="2">
+            <label class="field-label" for="part-2-input">
+              Challenge input
+              <span class="field-hint">Paste input data</span>
+            </label>
+            <textarea
+              class="challenge-input"
+              id="part-2-input"
+              data-part-input
+              name="part-2-input"
+              placeholder="Paste your Part 2 input here..."
+              spellcheck="false"
+              required
+            ></textarea>
+            <div class="solve-row">
+              <p class="solve-note">This page does not send input anywhere by itself.</p>
+              <button class="button solve-button" data-part-button type="submit">
+                <span data-button-label>Solve Part 2</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </form>
+
+          <section class="result-section" aria-labelledby="part-2-output-title">
+            <div class="result-heading">
+              <div>
+                <p class="eyebrow">SOLUTION</p>
+                <h3 id="part-2-output-title">Part 2 output</h3>
+              </div>
+              <span class="result-format">Plain text</span>
+            </div>
+            <div class="output-box" data-part-output>
+              <p class="output-placeholder" data-part-placeholder>Your result will appear here after the solver runs.</p>
+              <pre class="output-content" data-part-result hidden></pre>
+            </div>
+            <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
+              Ready for pine-cone counts. Enter comma-separated values and solve this part.
+            </p>
+          </section>
+        </section>
+
+        <section class="part-panel" data-part-panel="3" aria-labelledby="part-3-title">
+          <div class="part-heading">
+            <span class="part-number">03</span>
+            <div>
+              <p class="eyebrow">CHALLENGE PART</p>
+              <h2 id="part-3-title">Part 3</h2>
+            </div>
+          </div>
+
+          <form class="solver-form" data-part-form data-part="3">
+            <label class="field-label" for="part-3-input">
+              Challenge input
+              <span class="field-hint">Paste input data</span>
+            </label>
+            <textarea
+              class="challenge-input"
+              id="part-3-input"
+              data-part-input
+              name="part-3-input"
+              placeholder="Paste your Part 3 input here..."
+              spellcheck="false"
+              required
+            ></textarea>
+            <div class="solve-row">
+              <p class="solve-note">This page does not send input anywhere by itself.</p>
+              <button class="button solve-button" data-part-button type="submit">
+                <span data-button-label>Solve Part 3</span>
+                <span aria-hidden="true">→</span>
+              </button>
+            </div>
+          </form>
+
+          <section class="result-section" aria-labelledby="part-3-output-title">
+            <div class="result-heading">
+              <div>
+                <p class="eyebrow">SOLUTION</p>
+                <h3 id="part-3-output-title">Part 3 output</h3>
+              </div>
+              <span class="result-format">Plain text</span>
+            </div>
+            <div class="output-box" data-part-output>
+              <p class="output-placeholder" data-part-placeholder>Your result will appear here after the solver runs.</p>
+              <pre class="output-content" data-part-result hidden></pre>
+            </div>
+            <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
+              Ready for pine-cone counts. Enter comma-separated values and solve this part.
+            </p>
+          </section>
+        </section>
+      </div>
     </main>
 
     <footer class="site-footer">
@@ -85,63 +207,76 @@
           <span class="brand-name">Everybody Codes <span>Solver</span></span>
         </a>
         <p>For the TLV team · focused on challenges older than five days.</p>
-        <a class="footer-link" href="index.html">Project overview <span aria-hidden="true">↗</span></a>
+        <a class="footer-link" href="index.html">Challenge index <span aria-hidden="true">↗</span></a>
       </div>
     </footer>
 
+    <script src="solvers/EC2601/part1.js"></script>
+    <script src="solvers/EC2601/part2.js"></script>
+    <script src="solvers/EC2601/part3.js"></script>
     <script>
-      const form = document.querySelector("#solver-form");
-      const input = document.querySelector("#challenge-input");
-      const button = document.querySelector("#solve-button");
-      const buttonLabel = button.querySelector(".button-label");
-      const title = document.querySelector("#challenge-title");
-      const part = document.querySelector("#challenge-part");
-      const placeholder = document.querySelector("#output-placeholder");
-      const output = document.querySelector("#output-content");
-      const status = document.querySelector("#solver-status");
+      // Each solver script defines its part-specific function. Forms only update their own output.
+      const challengeTitle = document.querySelector("#challenge-title");
+      const partSolvers = {
+        1: window.solveEC2601Part1,
+        2: window.solveEC2601Part2,
+        3: window.solveEC2601Part3
+      };
 
-      form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        if (!form.reportValidity()) return;
+      document.querySelectorAll("[data-part-form]").forEach((form) => {
+        form.addEventListener("submit", async (event) => {
+          event.preventDefault();
+          if (!form.reportValidity()) return;
 
-        const solver = window.solveChallenge;
-        if (typeof solver !== "function") {
-          status.textContent = "Solver integration is not configured. Connect a window.solveChallenge function to enable results.";
-          status.classList.add("status-error");
-          return;
-        }
+          const panel = form.closest("[data-part-panel]");
+          const input = form.querySelector("[data-part-input]");
+          const button = form.querySelector("[data-part-button]");
+          const buttonLabel = button.querySelector("[data-button-label]");
+          const placeholder = panel.querySelector("[data-part-placeholder]");
+          const output = panel.querySelector("[data-part-result]");
+          const status = panel.querySelector("[data-part-status]");
+          const partNumber = Number(form.dataset.part);
+          const solver = partSolvers[partNumber];
 
-        button.disabled = true;
-        buttonLabel.textContent = "Solving...";
-        status.textContent = "Processing challenge input...";
-        status.classList.remove("status-error");
-        placeholder.textContent = "Waiting for a result...";
-        placeholder.hidden = false;
-        output.hidden = true;
-
-        try {
-          const result = await solver(input.value, {
-            title: title.textContent.trim(),
-            part: part.textContent.trim()
-          });
-          if (typeof result !== "string" && typeof result !== "number") {
-            throw new TypeError("The solver must return a string or number.");
+          if (typeof solver !== "function") {
+            status.textContent = `Part ${partNumber} solver failed to load. Check its script link and try again.`;
+            status.classList.add("status-error");
+            return;
           }
 
-          output.textContent = String(result);
-          output.hidden = false;
-          placeholder.hidden = true;
-          status.textContent = "Solution complete.";
-        } catch (error) {
-          placeholder.textContent = "No result was produced. Check the solver and try again.";
-          status.textContent = error instanceof Error
-            ? `Solver error: ${error.message}`
-            : "Solver error: an unexpected error occurred.";
-          status.classList.add("status-error");
-        } finally {
-          button.disabled = false;
-          buttonLabel.textContent = "Solve";
-        }
+          button.disabled = true;
+          buttonLabel.textContent = `Solving Part ${partNumber}...`;
+          status.textContent = `Processing Part ${partNumber} input...`;
+          status.classList.remove("status-error");
+          placeholder.textContent = "Waiting for a result...";
+          placeholder.hidden = false;
+          output.hidden = true;
+
+          try {
+            const result = await solver(input.value, {
+              title: challengeTitle.textContent.trim(),
+              part: `Part ${partNumber}`,
+              partNumber
+            });
+            if (typeof result !== "string" && typeof result !== "number") {
+              throw new TypeError("The solver must return a string or number.");
+            }
+
+            output.textContent = String(result);
+            output.hidden = false;
+            placeholder.hidden = true;
+            status.textContent = `Part ${partNumber} solution complete.`;
+          } catch (error) {
+            placeholder.textContent = "No result was produced. Check the solver and try again.";
+            status.textContent = error instanceof Error
+              ? `Solver error: ${error.message}`
+              : "Solver error: an unexpected error occurred.";
+            status.classList.add("status-error");
+          } finally {
+            button.disabled = false;
+            buttonLabel.textContent = `Solve Part ${partNumber}`;
+          }
+        });
       });
     </script>
   </body>
