@@ -14,13 +14,12 @@ jobs:
       - name: Send Discord notification
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
-          EVENT_PATH: ${{ github.event_path }}
         run: |
           node <<'NODE'
           const fs = require('fs');
 
           const event = JSON.parse(
-            fs.readFileSync(process.env.EVENT_PATH, 'utf8')
+            fs.readFileSync(process.env.GITHUB_EVENT_PATH, 'utf8')
           );
 
           if (!event.commits?.length) process.exit(0);
@@ -74,9 +73,7 @@ jobs:
             body: JSON.stringify(payload)
           }).then(async response => {
             if (!response.ok) {
-              throw new Error(
-                `Discord returned ${response.status}`
-              );
+              throw new Error(`Discord returned ${response.status}`);
             }
           }).catch(error => {
             console.error(error);
