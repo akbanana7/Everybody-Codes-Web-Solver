@@ -3,132 +3,71 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#003249">
-    <meta name="description" content="A focused Everybody Codes workspace for the TLV team and its older challenges.">
-    <title>Everybody Codes Solver | TLV team workspace</title>
+    <meta name="theme-color" content="#071820">
+    <meta name="description" content="A manually maintained index of Everybody Codes challenges for the TLV team.">
+    <title>Challenge Index | Everybody Codes Solver</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <header class="site-header">
       <div class="header-inner">
-        <a class="brand" href="index.html" aria-label="Everybody Codes Solver home">
+        <a class="brand" href="index.html" aria-label="Everybody Codes challenge index">
           <span class="brand-mark" aria-hidden="true">EC</span>
           <span class="brand-name">Everybody Codes <span>Solver</span></span>
         </a>
         <nav class="site-nav" aria-label="Main navigation">
-          <a href="#about">About</a>
-          <a href="#approach">How it fits</a>
+          <a class="nav-current" href="#challenge-index" aria-current="page">Challenge index</a>
           <a class="nav-cta" href="template.html">Open workspace <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </header>
 
-    <main>
-      <section class="hero page-shell">
-        <div class="hero-copy">
-          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> A workspace for the TLV team</p>
-          <h1>Bring the older quests <span>back into reach.</span></h1>
-          <p class="hero-description">
-            A focused starting point for the TLV team to work on Everybody Codes challenges more
-            than five days old, without losing sight of the puzzle itself.
+    <main class="index-main page-shell" id="challenge-index">
+      <section class="index-heading" aria-labelledby="page-title">
+        <div>
+          <p class="eyebrow"><span class="eyebrow-dot" aria-hidden="true"></span> TLV TEAM · EVERYBODY CODES</p>
+          <h1 id="page-title">Challenge <span>index</span></h1>
+          <p class="index-description">
+            A quick-reference list for older puzzles. Add a title and description for each challenge,
+            then open its workspace when you're ready to solve.
           </p>
-          <div class="hero-actions">
-            <a class="button button-primary" href="template.html">Open solution workspace <span aria-hidden="true">→</span></a>
-            <a class="text-link" href="#about">What is this project?</a>
-          </div>
-          <div class="hero-note">
-            <span class="note-rule" aria-hidden="true"></span>
-            <p>Made for older Everybody Codes challenges.<br><strong>Built around the TLV team's original goal.</strong></p>
-          </div>
         </div>
-
-        <div class="hero-visual">
-          <div class="visual-orbit orbit-one" aria-hidden="true"></div>
-          <div class="visual-orbit orbit-two" aria-hidden="true"></div>
-          <div class="workspace-card">
-            <div class="workspace-topline">
-              <span class="workspace-label"><span class="status-dot" aria-hidden="true"></span> SOLUTION WORKSPACE</span>
-              <span class="workspace-index">INPUT / OUTPUT</span>
-            </div>
-            <div class="workspace-heading">
-              <span class="mini-label">YOUR CHALLENGE</span>
-              <span class="workspace-title">A fresh place to think.</span>
-              <span class="workspace-subtitle">Bring a prompt. Keep the focus on solving.</span>
-            </div>
-            <div class="workspace-input" aria-hidden="true">
-              <span class="input-line line-long"></span>
-              <span class="input-line line-short"></span>
-              <span class="input-line line-medium"></span>
-              <span class="input-cursor"></span>
-            </div>
-            <div class="workspace-bottom">
-              <span class="workspace-caption">Challenge input</span>
-              <span class="workspace-action">Solve <span aria-hidden="true">→</span></span>
-            </div>
-          </div>
-          <span class="visual-tag tag-top">ONE PUZZLE AT A TIME</span>
-          <span class="visual-tag tag-bottom">TLV · EVERYBODY CODES</span>
+        <div class="index-count" aria-label="Challenge index">
+          <span class="count-mark" aria-hidden="true">#</span>
+          <span>YOUR CHALLENGES</span>
         </div>
       </section>
 
-      <section class="intro-section" id="about">
-        <div class="page-shell intro-grid">
+      <section class="challenge-section" aria-labelledby="challenge-list-title">
+        <div class="list-heading">
           <div>
-            <p class="eyebrow eyebrow-dark">THE PROJECT</p>
-            <h2>A small tool for a specific kind of backlog.</h2>
+            <p class="eyebrow eyebrow-muted">THE BACKLOG</p>
+            <h2 id="challenge-list-title">Challenges to revisit</h2>
           </div>
-          <div class="intro-copy">
-            <p>
-              Everybody Codes Solver was started to help the TLV team work through Everybody
-              Codes problems that are out of date—older than five days. The aim is simple:
-              make it easier to bring a challenge into a clear, focused solving space.
-            </p>
-            <p>
-              This site is the lightweight starting point. The solution page provides a reusable
-              input-and-output layout; a challenge-solving implementation can be connected when
-              one is available.
-            </p>
-            <a class="inline-link" href="template.html">Explore the solution page <span aria-hidden="true">→</span></a>
-          </div>
+          <p class="edit-hint">To add an entry, duplicate a challenge card in <code>index.html</code> and edit its number, title, description, and link label.</p>
         </div>
-      </section>
 
-      <section class="approach-section page-shell" id="approach">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow eyebrow-dark">A CLEAR STARTING POINT</p>
-            <h2>Challenge in. Room to solve.</h2>
-          </div>
-          <p class="section-summary">A simple structure for the work, without pretending the solver is already wired up.</p>
-        </div>
-        <div class="approach-grid">
-          <article class="approach-card">
-            <span class="card-number">01</span>
-            <h3>Bring the prompt</h3>
-            <p>Paste a challenge description or its input data into a spacious, readable workspace.</p>
-          </article>
-          <article class="approach-card">
-            <span class="card-number">02</span>
-            <h3>Keep the context</h3>
-            <p>Give each solution a clear challenge title, part, and any useful instructions.</p>
-          </article>
-          <article class="approach-card">
-            <span class="card-number">03</span>
-            <h3>Connect a solver</h3>
-            <p>The template exposes a small integration hook for real solution logic when it exists.</p>
+        <div class="challenge-list">
+          <!-- Duplicate this article for each challenge, then replace its number, title, description, and link label. -->
+          <article class="challenge-card">
+            <div class="challenge-number" aria-hidden="true">01</div>
+            <div class="challenge-copy">
+              <p class="challenge-kicker">CHALLENGE</p>
+              <h3>Challenge name / number</h3>
+              <p class="challenge-description">Replace this text with a short description of the challenge.</p>
+            </div>
+            <a class="challenge-link" href="template.html" aria-label="Open workspace for Challenge name / number">
+              <span>Open workspace</span>
+              <span class="link-arrow" aria-hidden="true">↗</span>
+            </a>
           </article>
         </div>
       </section>
 
-      <section class="closing-section">
-        <div class="page-shell closing-inner">
-          <div>
-            <p class="eyebrow">READY WHEN YOU ARE</p>
-            <h2>Start with the challenge.<br>Build from there.</h2>
-          </div>
-          <a class="button button-light" href="template.html">Open solution workspace <span aria-hidden="true">→</span></a>
-        </div>
-      </section>
+      <aside class="index-note">
+        <span class="note-symbol" aria-hidden="true">i</span>
+        <p>Entries are maintained here by editing the page source. No challenge catalog or solver API is connected yet.</p>
+      </aside>
     </main>
 
     <footer class="site-footer">
@@ -137,7 +76,7 @@
           <span class="brand-mark" aria-hidden="true">EC</span>
           <span class="brand-name">Everybody Codes <span>Solver</span></span>
         </a>
-        <p>For the TLV team · focused on challenges older than five days.</p>
+        <p>For the TLV team · challenges older than five days.</p>
         <a class="footer-link" href="template.html">Solution workspace <span aria-hidden="true">↗</span></a>
       </div>
     </footer>
