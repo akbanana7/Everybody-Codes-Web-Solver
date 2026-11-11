@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#003249">
+    <meta name="description" content="A reusable Everybody Codes challenge solution workspace.">
+    <title>Solution workspace | Everybody Codes Solver</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body class="solution-body">
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Everybody Codes Solver home">
+          <span class="brand-mark" aria-hidden="true">EC</span>
+          <span class="brand-name">Everybody Codes <span>Solver</span></span>
+        </a>
+        <nav class="site-nav" aria-label="Main navigation">
+          <a href="index.html#about">About</a>
+          <a href="index.html#approach">How it fits</a>
+          <a class="nav-cta" href="template.html" aria-current="page">Solution workspace <span aria-hidden="true">↗</span></a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="solution-main page-shell">
+      <a class="back-link" href="index.html"><span aria-hidden="true">←</span> Back to overview</a>
+
+      <section class="solution-intro" aria-labelledby="challenge-title">
+        <p class="eyebrow eyebrow-dark">CHALLENGE WORKSPACE</p>
+        <div class="solution-title-row">
+          <div>
+            <h1 id="challenge-title">Challenge title</h1>
+            <p class="solution-description" id="challenge-description">
+              Replace this description with the challenge instructions or a short note for your team.
+            </p>
+          </div>
+          <span class="part-badge" id="challenge-part">Part 1</span>
+        </div>
+      </section>
+
+      <form class="solver-form" id="solver-form">
+        <label class="field-label" for="challenge-input">
+          Challenge input
+          <span class="field-hint">Paste the puzzle prompt, input data, or both.</span>
+        </label>
+        <textarea
+          class="challenge-input"
+          id="challenge-input"
+          name="challenge-input"
+          placeholder="Paste your challenge input here..."
+          spellcheck="false"
+          required
+        ></textarea>
+        <div class="solve-row">
+          <p class="solve-note">This page does not send input anywhere by itself.</p>
+          <button class="button button-primary solve-button" id="solve-button" type="submit">
+            <span class="button-label">Solve</span>
+            <span class="button-arrow" aria-hidden="true">→</span>
+          </button>
+        </div>
+      </form>
+
+      <section class="result-section" aria-labelledby="result-title">
+        <div class="result-heading">
+          <div>
+            <p class="eyebrow eyebrow-dark">SOLUTION</p>
+            <h2 id="result-title">Output</h2>
+          </div>
+          <span class="result-format">Plain text</span>
+        </div>
+        <div class="output-box" id="output-box">
+          <p class="output-placeholder" id="output-placeholder">Your result will appear here after the solver runs.</p>
+          <pre class="output-content" id="output-content" hidden></pre>
+        </div>
+        <p class="solver-status" id="solver-status" role="status" aria-live="polite" aria-atomic="true">
+          Solver integration is not configured. Connect a <code>window.solveChallenge</code> function to enable results.
+        </p>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="page-shell footer-inner">
+        <a class="brand footer-brand" href="index.html">
+          <span class="brand-mark" aria-hidden="true">EC</span>
+          <span class="brand-name">Everybody Codes <span>Solver</span></span>
+        </a>
+        <p>For the TLV team · focused on challenges older than five days.</p>
+        <a class="footer-link" href="index.html">Project overview <span aria-hidden="true">↗</span></a>
+      </div>
+    </footer>
+
+    <script>
+      const form = document.querySelector("#solver-form");
+      const input = document.querySelector("#challenge-input");
+      const button = document.querySelector("#solve-button");
+      const buttonLabel = button.querySelector(".button-label");
+      const title = document.querySelector("#challenge-title");
+      const part = document.querySelector("#challenge-part");
+      const placeholder = document.querySelector("#output-placeholder");
+      const output = document.querySelector("#output-content");
+      const status = document.querySelector("#solver-status");
+
+      form.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        if (!form.reportValidity()) return;
+
+        const solver = window.solveChallenge;
+        if (typeof solver !== "function") {
+          status.textContent = "Solver integration is not configured. Connect a window.solveChallenge function to enable results.";
+          status.classList.add("status-error");
+          return;
+        }
+
+        button.disabled = true;
+        buttonLabel.textContent = "Solving...";
+        status.textContent = "Processing challenge input...";
+        status.classList.remove("status-error");
+        placeholder.textContent = "Waiting for a result...";
+        placeholder.hidden = false;
+        output.hidden = true;
+
+        try {
+          const result = await solver(input.value, {
+            title: title.textContent.trim(),
+            part: part.textContent.trim()
+          });
+          if (typeof result !== "string" && typeof result !== "number") {
+            throw new TypeError("The solver must return a string or number.");
+          }
+
+          output.textContent = String(result);
+          output.hidden = false;
+          placeholder.hidden = true;
+          status.textContent = "Solution complete.";
+        } catch (error) {
+          placeholder.textContent = "No result was produced. Check the solver and try again.";
+          status.textContent = error instanceof Error
+            ? `Solver error: ${error.message}`
+            : "Solver error: an unexpected error occurred.";
+          status.classList.add("status-error");
+        } finally {
+          button.disabled = false;
+          buttonLabel.textContent = "Solve";
+        }
+      });
+    </script>
+  </body>
+</html>
