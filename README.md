@@ -27,8 +27,8 @@ Viewable at: [Everybody Codes Solver](https://everybody-codes-web-solver.akbanan
 
 ## Solution page and integration
 
-`EC2601.html` and `EC2602.html` are challenge-specific pages. `template.html` currently mirrors
-`EC2602.html`. Each page has three independent part sections and loads its implementation from the
+`EC2601.html`, `EC2602.html`, and `EC2603.html` are challenge-specific pages. `template.html`
+currently mirrors `EC2603.html`. Each page has three independent part sections and loads its implementation from the
 matching `solvers/<challenge>/part1.js`, `part2.js`, and `part3.js` files. Update the challenge
 heading/description as needed; HTML comments identify the page customization and JavaScript hook
 locations.
@@ -41,8 +41,13 @@ returns the total additional cones for that formation. Each script exposes one f
 The EC2602 solver accepts one group of alloy comparisons per line (`a>b` means alloy `a` is harder
 than alloy `b`) and returns a checksum based on each group's uniquely determined hardest-to-softest
 order. Its scripts expose `window.solveEC2602Part1(input)`, `window.solveEC2602Part2(input)`, and
-`window.solveEC2602Part3(input)`. Both challenge pages load and call their own part functions;
+`window.solveEC2602Part3(input)`. Each challenge page loads and calls its own part functions;
 results are rendered as plain text in the corresponding output.
+
+The EC2603 solver accepts one vote per line. Part 1 uses equal-length ISO standard/vote pairs; Part 2
+repeats ISO patterns from right to left; Part 3 discards ISO2 votes with a smaller representation of
+the same value. Its scripts expose `window.solveEC2603Part1(input)`,
+`window.solveEC2603Part2(input)`, and `window.solveEC2603Part3(input)`.
 
 See [CONTEXT.md](CONTEXT.md) for the project structure, design system, conventions, and contributor
 guidance.

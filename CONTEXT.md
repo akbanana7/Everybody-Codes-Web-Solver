@@ -9,8 +9,8 @@ change; do not use it as a task log.
 Everybody Codes Solver is a lightweight project started by ak for the TLV team. Its stated goal is
 to help the team solve Everybody Codes problems that are "out of date"—older than five days.
 The current site provides a manually maintained challenge index and challenge-specific three-part
-input/output pages. EC2601 and EC2602 have local JavaScript solvers for all three parts; no backend
-is used.
+input/output pages. EC2601, EC2602, and EC2603 have local JavaScript solvers for all three parts;
+no backend is used.
 
 The intended audience is the TLV team working on Everybody Codes challenges. Do not assume
 additional users, workflows, supported challenge parts, or product features without repository
@@ -18,8 +18,8 @@ evidence or direction from the project owner.
 
 ## Technology and architecture
 
-- **Languages:** HTML and CSS, with vanilla JavaScript solvers in `solvers/EC2601/` and
-  `solvers/EC2602/`.
+- **Languages:** HTML and CSS, with vanilla JavaScript solvers in `solvers/EC2601/`,
+  `solvers/EC2602/`, and `solvers/EC2603/`.
 - **Frameworks and dependencies:** None. There is no package manifest, framework, or dependency
   installation step.
 - **Architecture:** Static, multi-page frontend. `index.html`, challenge pages, and
@@ -35,6 +35,12 @@ evidence or direction from the project owner.
   `window.solveEC2602Part3(input)`, respectively. Each accepts comparison groups with one group per
   line (`a>b` means `a` is harder than `b`) and returns the checksum as a decimal string. Each group
   must have a unique hardest-to-softest order, otherwise the solver reports an error.
+- **EC2603 solver integration:** `solvers/EC2603/part1.js`, `part2.js`, and `part3.js` expose
+  `window.solveEC2603Part1(input)`, `window.solveEC2603Part2(input)`, and
+  `window.solveEC2603Part3(input)`, respectively. Each accepts one vote (`ISO-<bases> <digits>` or
+  `ISO2-<bases> <digits>`) per line and returns a decimal score string. Part 1 requires matching
+  standard/vote lengths; Part 2 repeats the base pattern from right to left; Part 3 sums only votes
+  with no smaller representation of the same value.
 - **Data handling:** The current static pages do not submit input to a service or save it. A future
   solver integration must document its actual data flow and handle user input safely.
 
@@ -52,6 +58,10 @@ evidence or direction from the project owner.
 | `solvers/EC2602/part1.js` | Computes the checksum from complete pairwise alloy comparisons |
 | `solvers/EC2602/part2.js` | Reconstructs uniquely ordered alloys from all but one comparison |
 | `solvers/EC2602/part3.js` | Reconstructs uniquely ordered alloys from sparse comparisons |
+| `EC2603.html` | EC2603-specific page loading the three ISO vote solver scripts |
+| `solvers/EC2603/part1.js` | Converts equal-length ISO votes to decimal and sums them |
+| `solvers/EC2603/part2.js` | Converts votes using the repeating ISO base pattern |
+| `solvers/EC2603/part3.js` | Filters non-minimal ISO2 representations and sums valid votes |
 | `style.css` | Shared permanent dark theme, palette, typography, responsive layouts, and interaction states for both pages |
 | `README.md` | Project overview and local viewing/integration guidance |
 | `CONTEXT.md` | Shared project facts and contributor guidelines |
@@ -65,14 +75,16 @@ need.
 - `/` (or `index.html`) is the manually maintained challenge index.
 - `EC2601.html` is the specific page for challenge EC2601.
 - `EC2602.html` is the specific page for challenge EC2602.
-- `template.html` currently mirrors `EC2602.html` and includes its challenge-specific solver links.
+- `EC2603.html` is the specific page for challenge EC2603.
+- `template.html` currently mirrors `EC2603.html` and includes its challenge-specific solver links.
 - Each `.challenge-card` entry in `index.html` contains a challenge number, title, description,
   and link to the solution workspace. To add an entry, duplicate the `<article class="challenge-card">`
   element and edit its number, title, description, and accessible link label. Entries are static
   HTML, not generated from a data file or API.
 - The workspace links back to the challenge index. These are static document links, not application
   routes managed by a router.
-- No challenge-specific pages or challenge catalog currently exist.
+- Challenge-specific pages currently exist for EC2601, EC2602, and EC2603; there is no generated
+  challenge catalog or dynamic routing.
 
 To customize a solution page, update the challenge heading and description in its challenge page
 (and keep `template.html` in sync when it is intended to mirror that page).
@@ -80,8 +92,8 @@ The page provides three separate sections with `data-part-panel`, `data-part-for
 `data-part-input`, `data-part-button`, `data-part-output`, and `data-part-status` hooks. Each form
 selects the corresponding challenge-specific `window.solve<Challenge>PartN` function loaded by a
 `<script src>` element. Keep output as text (`textContent`), not injected HTML. HTML comments
-identify the main customization and JavaScript integration points. EC2601 uses `BigInt` so
-integer totals do not lose precision.
+identify the main customization and JavaScript integration points. EC2601 and EC2603 use `BigInt`
+so integer totals do not lose precision.
 
 ## Design system
 

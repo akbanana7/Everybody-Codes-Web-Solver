@@ -4,8 +4,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#071820">
-    <meta name="description" content="Three-part solver for EC2602: The Axeperiment.">
-    <title>The Axeperiment (2026 - 02) | Everybody Codes Solver</title>
+    <meta name="description" content="Three-part solver for EC2603: The ISOlation.">
+    <title>The ISOlation (2026 - 03) | Everybody Codes Solver</title>
     <link rel="stylesheet" href="style.css">
   </head>
   <body class="solution-body">
@@ -30,10 +30,10 @@
         <div class="solution-title-row">
           <div>
             <!-- JS hook: set this challenge title; it is passed to window.solveChallenge for each part. -->
-            <h1 id="challenge-title">The Axeperiment (2026 - 02)</h1>
+            <h1 id="challenge-title">The ISOlation (2026 - 03)</h1>
             <!-- JS hook: add or update the challenge instructions here. -->
             <p class="solution-description" id="challenge-description">
-              Reconstruct the hardest-to-softest alloy order from pairwise comparisons and calculate the checksum.
+              Decode elven ISO and ISO2 votes and calculate each candidate's total score.
             </p>
           </div>
           <span class="part-badge">3 parts</span>
@@ -56,7 +56,7 @@
           <form class="solver-form" data-part-form data-part="1">
             <label class="field-label" for="part-1-input">
               Challenge input
-              <span class="field-hint">Enter one group's alloy comparisons per line.</span>
+              <span class="field-hint">Enter one vote per line: an ISO base pattern followed by its vote.</span>
             </label>
             <!-- JS hook: read this textarea as the input for Part 1. -->
             <textarea
@@ -64,7 +64,7 @@
               id="part-1-input"
               data-part-input
               name="part-1-input"
-              placeholder="4&lt;3 2&lt;5 3&gt;1 1&gt;2 1&lt;5 4&lt;1 3&gt;2 4&lt;2 3&gt;5 4&lt;5"
+              placeholder="ISO-3210 7654&#10;ISO-8742 2468&#10;ISO-1111 1111"
               spellcheck="false"
               required
             ></textarea>
@@ -93,7 +93,7 @@
             </div>
             <!-- JS hook: announce Part 1 loading, success, or error status here. -->
             <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
-              Enter one comparison group per line. Each group's complete ordering must be determined.
+              Each line must use an ISO pattern and a vote of the same length.
             </p>
           </section>
         </section>
@@ -110,14 +110,14 @@
           <form class="solver-form" data-part-form data-part="2">
             <label class="field-label" for="part-2-input">
               Challenge input
-              <span class="field-hint">Enter one group's comparisons per line; each group is missing one comparison.</span>
+              <span class="field-hint">Enter one vote per line. ISO patterns repeat from right to left when needed.</span>
             </label>
             <textarea
               class="challenge-input"
               id="part-2-input"
               data-part-input
               name="part-2-input"
-              placeholder="2&lt;5 3&gt;1 1&lt;5 4&lt;1 3&gt;2 4&lt;2 3&gt;5 4&lt;5"
+              placeholder="ISO-3210 7654&#10;ISO-8742 2468&#10;ISO-1 1111"
               spellcheck="false"
               required
             ></textarea>
@@ -143,7 +143,7 @@
               <pre class="output-content" data-part-result hidden></pre>
             </div>
             <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
-              Enter one incomplete comparison group per line. The remaining comparisons must determine a unique order.
+              Each line must use an ISO pattern and its vote; shorter patterns repeat as needed.
             </p>
           </section>
         </section>
@@ -160,14 +160,14 @@
           <form class="solver-form" data-part-form data-part="3">
             <label class="field-label" for="part-3-input">
               Challenge input
-              <span class="field-hint">Enter one group's remaining comparisons per line.</span>
+              <span class="field-hint">Enter one ISO2 vote per line. Only smallest representations count.</span>
             </label>
             <textarea
               class="challenge-input"
               id="part-3-input"
               data-part-input
               name="part-3-input"
-              placeholder="3&gt;1 1&lt;5 4&lt;2 3&gt;5"
+              placeholder="ISO2-3 23&#10;ISO2-61 149&#10;ISO2-978 99"
               spellcheck="false"
               required
             ></textarea>
@@ -193,7 +193,7 @@
               <pre class="output-content" data-part-result hidden></pre>
             </div>
             <p class="solver-status" data-part-status role="status" aria-live="polite" aria-atomic="true">
-              Enter one sparse comparison group per line. The remaining results must determine a unique order.
+              Invalid ISO2 representations are discarded before summing.
             </p>
           </section>
         </section>
@@ -211,16 +211,16 @@
       </div>
     </footer>
 
-    <script src="solvers/EC2602/part1.js"></script>
-    <script src="solvers/EC2602/part2.js"></script>
-    <script src="solvers/EC2602/part3.js"></script>
+    <script src="solvers/EC2603/part1.js"></script>
+    <script src="solvers/EC2603/part2.js"></script>
+    <script src="solvers/EC2603/part3.js"></script>
     <script>
       // Each solver script defines its part-specific function. Forms only update their own output.
       const challengeTitle = document.querySelector("#challenge-title");
       const partSolvers = {
-        1: window.solveEC2602Part1,
-        2: window.solveEC2602Part2,
-        3: window.solveEC2602Part3
+        1: window.solveEC2603Part1,
+        2: window.solveEC2603Part2,
+        3: window.solveEC2603Part3
       };
 
       document.querySelectorAll("[data-part-form]").forEach((form) => {
